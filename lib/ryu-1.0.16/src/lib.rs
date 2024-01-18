@@ -103,7 +103,7 @@
     clippy::wildcard_imports
 )]
 
-mod buffer;
+pub mod buffer;
 mod common;
 mod d2s;
 #[cfg(not(feature = "small"))]
