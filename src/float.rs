@@ -30,10 +30,18 @@ fn test_encode() {
     assert(0_f32, "0.0");
     assert(1.23456_f32, "1.23456");
     assert(-1.23456_f32, "-1.23456");
+    
+    assert(f32::NAN, "NaN");
+    assert(f32::INFINITY, "inf");
+    assert(f32::NEG_INFINITY, "-inf");
 
     assert(0_f64, "0.0");
     assert(1.23456789012345_f64, "1.23456789012345");
     assert(-1.23456789012345_f64, "-1.23456789012345");
+
+    assert(f64::NAN, "NaN");
+    assert(f64::INFINITY, "inf");
+    assert(f64::NEG_INFINITY, "-inf");
 }
 
 #[test]
