@@ -11,4 +11,5 @@ readme = "README.md"
 keywords = ["encoder", "encode", "encoding"]
 
 [dependencies]
+ryu = {path = "lib/ryu-1.0.16"}
 itoa = {path = "lib/itoa-1.0.10"}
