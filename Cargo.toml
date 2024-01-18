@@ -11,3 +11,4 @@ readme = "README.md"
 keywords = ["encoder", "encode", "encoding"]
 
 [dependencies]
+itoa = {path = "lib/itoa-1.0.10"}
