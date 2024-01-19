@@ -15,5 +15,5 @@ keywords = ["encoder", "encode", "encoding"]
 members = ["lib/*"]
 
 [dependencies]
-encoder-ryu = {path = "lib/encoder-ryu"}
-encoder-itoa = {path = "lib/encoder-itoa"}
+encoder-ryu = {path = "lib/encoder-ryu", version = "1.0.16"}
+encoder-itoa = {path = "lib/encoder-itoa", version = "1.0.10"}
