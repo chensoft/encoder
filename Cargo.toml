@@ -8,11 +8,7 @@ description = "A collection of crates for rapid encoding"
 documentation = "https://docs.rs/encoder"
 repository = "https://github.com/chensoft/encoder"
 readme = "README.md"
-exclude = ["lib/"]
 keywords = ["encoder", "encode", "encoding"]
-
-[workspace]
-members = ["lib/*"]
 
 [dependencies]
 encoder-ryu = {path = "lib/encoder-ryu", version = "1.0.16"}
