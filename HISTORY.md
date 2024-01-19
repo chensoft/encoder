@@ -1,6 +1,6 @@
-## [0.1.0] - 2024-01-18
+## [0.1.0] - 2024-01-19
 
 ### Added
 
 - fast integer encoding
-- fast float encoding
+- fast floating point encoding
