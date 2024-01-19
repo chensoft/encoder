@@ -5,33 +5,29 @@ A collection of crates for rapid encoding
 
 ## Quick Start
 
-#### Integer encoding
+#### Number encoding
 
 ```rust
-use encoder::Encode;
+use encoder::number::Encode;
 
 fn main() {
     let mut buf = vec![];
     1_i32.encode(&mut buf);
     2_u32.encode(&mut buf);
-    assert_eq!(String::from_utf8_lossy(&buf), r#"12"#);
+    1_f32.encode(&mut buf);
+    2_f64.encode(&mut buf);
+    assert_eq!(String::from_utf8_lossy(&buf), r#"121.02.0"#);
 }
 ```
 
-#### Floating-point encoding
+#### Json encoding
 
 ```rust
-use encoder::Encode;
+use encoder::json::Encode;
 
 fn main() {
     let mut buf = vec![];
-    1_f32.encode(&mut buf);
-    2_f32.encode(&mut buf);
-    3_f32.encode(&mut buf);
-    1_f64.encode(&mut buf);
-    2_f64.encode(&mut buf);
-    3_f64.encode(&mut buf);
-    assert_eq!(String::from_utf8_lossy(&buf), r#"1.02.03.01.02.03.0"#);
+    assert_eq!(String::from_utf8_lossy(&buf), r#""#);
 }
 ```
 

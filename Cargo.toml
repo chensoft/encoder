@@ -1,6 +1,6 @@
 [package]
 name = "encoder"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2021"
 authors = ["Jian Chen <admin@chensoft.com>"]
 license = "MIT"
@@ -8,7 +8,7 @@ description = "A collection of crates for rapid encoding"
 documentation = "https://docs.rs/encoder"
 repository = "https://github.com/chensoft/encoder"
 readme = "README.md"
-keywords = ["encoder", "encode", "encoding"]
+keywords = ["encoder", "encode", "encoding", "number", "json"]
 
 [dependencies]
 simd-json = "=0.13.7"
