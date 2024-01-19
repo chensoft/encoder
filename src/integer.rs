@@ -3,6 +3,7 @@ use super::Encode;
 macro_rules! impl_integer {
     ($t:ident, $m:expr) => {
         impl Encode for $t {
+            #[inline]
             fn encode(&self, buf: &mut Vec<u8>) {
                 let old = buf.len();
 

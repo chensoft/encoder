@@ -1,3 +1,9 @@
+## [0.1.2] - 2024-01-19
+
+### Changed
+
+- inline the encode function
+
 ## [0.1.1] - 2024-01-19
 
 ### Changed

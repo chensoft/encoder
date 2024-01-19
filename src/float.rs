@@ -4,6 +4,7 @@ use encoder_ryu::buffer::Sealed;
 macro_rules! impl_float {
     ($t:ident) => {
         impl Encode for $t {
+            #[inline]
             fn encode(&self, buf: &mut Vec<u8>) {
                 match !self.is_nonfinite() {
                     true => {
