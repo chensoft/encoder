@@ -1,70 +1,65 @@
 use super::Encode;
-use std::mem::MaybeUninit;
-use encoder_itoa::private::Sealed;
 
 macro_rules! impl_integer {
-    ($t:ident, $m:ident) => {
+    ($t:ident, $m:expr) => {
         impl Encode for $t {
             fn encode(&self, buf: &mut Vec<u8>) {
-                buf.reserve(encoder_itoa::$m);
+                let old = buf.len();
 
                 unsafe {
-                    let ptr = buf.as_mut_ptr().add(buf.len()) as *mut [MaybeUninit<u8>; encoder_itoa::$m];
-                    let arr = &mut *(ptr as *mut [MaybeUninit<u8>; encoder_itoa::$m]);
-                    let val = self.write(arr);
-                    let len = val.len();
-                    std::ptr::copy_nonoverlapping(val.as_ptr(), ptr as *mut u8, len);
-                    buf.set_len(buf.len() + len);
+                    buf.reserve($m);
+                    buf.set_len(old + $m);
                 }
+
+                let len = {
+                    let mut cur = std::io::Cursor::new(&mut buf[old..]);
+                    let _ = simd_json::to_writer(&mut cur, self);
+                    cur.position()
+                };
+
+                unsafe { buf.set_len(old + len as usize); }
             }
         }
     };
 }
 
-impl Encode for bool {
-    fn encode(&self, buf: &mut Vec<u8>) {
-        match *self {
-            true => buf.extend_from_slice("true".as_bytes()),
-            false => buf.extend_from_slice("false".as_bytes()),
-        }
-    }
-}
-
-impl_integer!(i8, I8_MAX_LEN);
-impl_integer!(u8, U8_MAX_LEN);
-impl_integer!(i16, I16_MAX_LEN);
-impl_integer!(u16, U16_MAX_LEN);
-impl_integer!(i32, I32_MAX_LEN);
-impl_integer!(u32, U32_MAX_LEN);
-impl_integer!(i64, I64_MAX_LEN);
-impl_integer!(u64, U64_MAX_LEN);
-impl_integer!(i128, I128_MAX_LEN);
-impl_integer!(u128, U128_MAX_LEN);
+impl_integer!(i8, 4);
+impl_integer!(u8, 3);
+impl_integer!(i16, 6);
+impl_integer!(u16, 5);
+impl_integer!(i32, 11);
+impl_integer!(u32, 10);
+impl_integer!(i64, 20);
+impl_integer!(u64, 20);
+impl_integer!(i128, 40);
+impl_integer!(u128, 39);
 
 #[cfg(target_pointer_width = "8")]
-impl_integer!(isize, I8_MAX_LEN);
+impl_integer!(isize, 4);
 #[cfg(target_pointer_width = "8")]
-impl_integer!(usize, U8_MAX_LEN);
+impl_integer!(usize, 3);
 
 #[cfg(target_pointer_width = "16")]
-impl_integer!(isize, I16_MAX_LEN);
+impl_integer!(isize, 6);
 #[cfg(target_pointer_width = "16")]
-impl_integer!(usize, U16_MAX_LEN);
+impl_integer!(usize, 5);
 
 #[cfg(target_pointer_width = "32")]
-impl_integer!(isize, I32_MAX_LEN);
+impl_integer!(isize, 11);
 #[cfg(target_pointer_width = "32")]
-impl_integer!(usize, U32_MAX_LEN);
+impl_integer!(usize, 10);
 
 #[cfg(target_pointer_width = "64")]
-impl_integer!(isize, I64_MAX_LEN);
+impl_integer!(isize, 20);
 #[cfg(target_pointer_width = "64")]
-impl_integer!(usize, U64_MAX_LEN);
+impl_integer!(usize, 20);
 
 #[cfg(target_pointer_width = "128")]
-impl_integer!(isize, I128_MAX_LEN);
+impl_integer!(isize, 40);
 #[cfg(target_pointer_width = "128")]
-impl_integer!(usize, U128_MAX_LEN);
+impl_integer!(usize, 39);
+
+impl_integer!(bool, 5);
 
 #[test]
 fn test_encode() {

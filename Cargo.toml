@@ -1,6 +1,6 @@
 [package]
 name = "encoder"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Jian Chen <admin@chensoft.com>"]
 license = "MIT"
@@ -11,5 +11,5 @@ readme = "README.md"
 keywords = ["encoder", "encode", "encoding"]
 
 [dependencies]
-encoder-ryu = {path = "lib/encoder-ryu", version = "1.0.16"}
-encoder-itoa = {path = "lib/encoder-itoa", version = "1.0.10"}
+simd-json = "=0.13.7"
+encoder-ryu = {path = "lib/encoder-ryu", version = "=1.0.16"}
