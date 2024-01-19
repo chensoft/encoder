@@ -1,5 +1,5 @@
 use super::Encode;
-use ryu::buffer::Sealed;
+use encoder_ryu::buffer::Sealed;
 
 macro_rules! impl_float {
     ($t:ident) => {

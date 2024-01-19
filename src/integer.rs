@@ -1,16 +1,16 @@
 use super::Encode;
 use std::mem::MaybeUninit;
-use itoa::private::Sealed;
+use encoder_itoa::private::Sealed;
 
 macro_rules! impl_integer {
     ($t:ident, $m:ident) => {
         impl Encode for $t {
             fn encode(&self, buf: &mut Vec<u8>) {
-                buf.reserve(itoa::$m);
+                buf.reserve(encoder_itoa::$m);
 
                 unsafe {
-                    let ptr = buf.as_mut_ptr().add(buf.len()) as *mut [MaybeUninit<u8>; itoa::$m];
-                    let arr = &mut *(ptr as *mut [MaybeUninit<u8>; itoa::$m]);
+                    let ptr = buf.as_mut_ptr().add(buf.len()) as *mut [MaybeUninit<u8>; encoder_itoa::$m];
+                    let arr = &mut *(ptr as *mut [MaybeUninit<u8>; encoder_itoa::$m]);
                     let val = self.write(arr);
                     let len = val.len();
                     std::ptr::copy_nonoverlapping(val.as_ptr(), ptr as *mut u8, len);
