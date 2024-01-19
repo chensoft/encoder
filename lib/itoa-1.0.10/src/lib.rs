@@ -106,7 +106,7 @@ impl Buffer {
 pub trait Integer: private::Sealed {}
 
 // Seal to prevent downstream implementations of the Integer trait.
-mod private {
+pub mod private {
     pub trait Sealed: Copy {
         type Buffer: 'static;
         fn write(self, buf: &mut Self::Buffer) -> &str;
@@ -195,14 +195,14 @@ macro_rules! impl_Integer {
     )*};
 }
 
-const I8_MAX_LEN: usize = 4;
-const U8_MAX_LEN: usize = 3;
-const I16_MAX_LEN: usize = 6;
-const U16_MAX_LEN: usize = 5;
-const I32_MAX_LEN: usize = 11;
-const U32_MAX_LEN: usize = 10;
-const I64_MAX_LEN: usize = 20;
-const U64_MAX_LEN: usize = 20;
+pub const I8_MAX_LEN: usize = 4;
+pub const U8_MAX_LEN: usize = 3;
+pub const I16_MAX_LEN: usize = 6;
+pub const U16_MAX_LEN: usize = 5;
+pub const I32_MAX_LEN: usize = 11;
+pub const U32_MAX_LEN: usize = 10;
+pub const I64_MAX_LEN: usize = 20;
+pub const U64_MAX_LEN: usize = 20;
 
 impl_Integer!(
     I8_MAX_LEN => i8,
@@ -289,7 +289,7 @@ macro_rules! impl_Integer128 {
     )*};
 }
 
-const U128_MAX_LEN: usize = 39;
-const I128_MAX_LEN: usize = 40;
+pub const U128_MAX_LEN: usize = 39;
+pub const I128_MAX_LEN: usize = 40;
 
 impl_Integer128!(I128_MAX_LEN => i128, U128_MAX_LEN => u128);
