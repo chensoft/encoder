@@ -1,7 +1,7 @@
 Encoder
 ==========================
 
-A collection of crates for rapid encoding
+Blazing fast encoder written in Rust
 
 [![Crates.io][crates-badge]][crates-url]
 [![MIT licensed][license-badge]][license-url]
