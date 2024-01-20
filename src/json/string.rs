@@ -14,9 +14,9 @@ impl Encode for char {
             let mut cur = std::io::Cursor::new(&mut buf[beg..]);
             let _ = simd_json::to_writer(&mut cur, self);
             cur.position()
-        };
+        } as usize;
 
-        unsafe { buf.set_len(beg + len as usize); }
+        unsafe { buf.set_len(beg + len); }
     }
 }
 
@@ -35,16 +35,16 @@ impl Encode for &str {
             let mut cur = std::io::Cursor::new(&mut buf[beg..]);
             let _ = simd_json::to_writer(&mut cur, self);
             cur.position()
-        };
+        } as usize;
 
-        unsafe { buf.set_len(beg + len as usize); }
+        unsafe { buf.set_len(beg + len); }
     }
 }
 
 impl Encode for String {
     #[inline]
     fn encode(&self, buf: &mut Vec<u8>) {
-        self.as_str().encode(buf);
+        self.as_str().encode(buf)
     }
 }
 

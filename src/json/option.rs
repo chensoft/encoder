@@ -5,7 +5,7 @@ impl<T: Encode> Encode for Option<T> {
     fn encode(&self, buf: &mut Vec<u8>) {
         match self {
             None => buf.extend_from_slice(b"null"),
-            Some(val) => val.encode(buf),
+            Some(val) => { val.encode(buf); }
         }
     }
 }

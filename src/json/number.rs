@@ -5,7 +5,7 @@ macro_rules! impl_integer {
         impl Encode for $t {
             #[inline]
             fn encode(&self, buf: &mut Vec<u8>) {
-                $crate::number::Encode::encode(self, buf);
+                $crate::number::Encode::encode(self, buf)
             }
         }
     };
