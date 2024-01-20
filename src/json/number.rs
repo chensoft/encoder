@@ -1,6 +1,6 @@
 use super::Encode;
 
-macro_rules! impl_integer {
+macro_rules! impl_number {
     ($t:ident) => {
         impl Encode for $t {
             #[inline]
@@ -11,21 +11,24 @@ macro_rules! impl_integer {
     };
 }
 
-impl_integer!(i8);
-impl_integer!(u8);
-impl_integer!(i16);
-impl_integer!(u16);
-impl_integer!(i32);
-impl_integer!(u32);
-impl_integer!(i64);
-impl_integer!(u64);
-impl_integer!(i128);
-impl_integer!(u128);
+impl_number!(i8);
+impl_number!(u8);
+impl_number!(i16);
+impl_number!(u16);
+impl_number!(i32);
+impl_number!(u32);
+impl_number!(i64);
+impl_number!(u64);
+impl_number!(i128);
+impl_number!(u128);
 
-impl_integer!(isize);
-impl_integer!(usize);
+impl_number!(isize);
+impl_number!(usize);
 
-impl_integer!(bool);
+impl_number!(bool);
+
+impl_number!(f32);
+impl_number!(f64);
 
 #[test]
 fn test_encode() {
@@ -79,6 +82,14 @@ fn test_encode() {
 
     assert(true, true.to_string());
     assert(false, false.to_string());
+
+    assert(0_f32, "0.0".to_string());
+    assert(1.23456_f32, "1.23456".to_string());
+    assert(-1.23456_f32, "-1.23456".to_string());
+
+    assert(0_f64, "0.0".to_string());
+    assert(1.23456789012345_f64, "1.23456789012345".to_string());
+    assert(-1.23456789012345_f64, "-1.23456789012345".to_string());
 }
 
 #[test]

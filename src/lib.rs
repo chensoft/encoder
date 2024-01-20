@@ -5,8 +5,9 @@
 //!
 //! ## How to Use
 //!
-//! Just run `cargo add encoder` to add this crate to your project, and then include the
-//! relevant trait in your code like this: `use encoder::number::Encode;`
+//! Run `cargo add encoder`
+//!
+//! Put module trait in your code `use encoder::<MODULE>::Encode;`
 //!
 //! ## Example
 //!
