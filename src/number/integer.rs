@@ -5,20 +5,20 @@ macro_rules! impl_integer {
         impl Encode for $t {
             #[inline]
             fn encode(&self, buf: &mut Vec<u8>) {
-                let old = buf.len();
+                let beg = buf.len();
 
                 unsafe {
                     buf.reserve($m);
-                    buf.set_len(old + $m);
+                    buf.set_len(beg + $m);
                 }
 
                 let len = {
-                    let mut cur = std::io::Cursor::new(&mut buf[old..]);
+                    let mut cur = std::io::Cursor::new(&mut buf[beg..]);
                     let _ = simd_json::to_writer(&mut cur, self);
                     cur.position()
                 };
 
-                unsafe { buf.set_len(old + len as usize); }
+                unsafe { buf.set_len(beg + len as usize); }
             }
         }
     };
