@@ -62,4 +62,8 @@ fn test_compose() {
     2_f64.encode(&mut buf);
     3_f64.encode(&mut buf);
     assert_eq!(String::from_utf8_lossy(&buf), r#"1.02.03.01.02.03.0"#);
+
+    assert_eq!(1_f32.stringify(), "1.0");
+    assert_eq!(2_f32.stringify(), "2.0");
+    assert_eq!(3_f32.stringify(), "3.0");
 }

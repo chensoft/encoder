@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Changed
+
+- provides a method for conversion to a string
+
 ## [0.2.1] - 2024-01-20
 
 ### Changed

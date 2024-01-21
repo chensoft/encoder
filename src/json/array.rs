@@ -32,6 +32,7 @@ fn test() {
         let mut buf = vec![];
         let arr = ["hello", "world"];
         arr.encode(&mut buf);
+        assert_eq!(arr.stringify(), r#"["hello","world"]"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"["hello","world"]"#);
     }
 
@@ -41,6 +42,7 @@ fn test() {
         vec.push("hello");
         vec.push("world");
         vec.encode(&mut buf);
+        assert_eq!(vec.stringify(), r#"["hello","world"]"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"["hello","world"]"#);
     }
 
@@ -50,6 +52,7 @@ fn test() {
         vec.push_back("world");
         vec.push_front("hello");
         vec.encode(&mut buf);
+        assert_eq!(vec.stringify(), r#"["hello","world"]"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"["hello","world"]"#);
     }
 }

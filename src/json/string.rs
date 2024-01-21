@@ -51,6 +51,10 @@ impl Encode for String {
 #[test]
 fn test() {
     {
+        assert_eq!('a'.stringify(), r#""a""#);
+        assert_eq!('b'.stringify(), r#""b""#);
+        assert_eq!('c'.stringify(), r#""c""#);
+
         let mut buf = vec![];
         'a'.encode(&mut buf);
         'b'.encode(&mut buf);
@@ -59,6 +63,12 @@ fn test() {
     }
 
     {
+        assert_eq!("Hello".stringify(), r#""Hello""#);
+        assert_eq!("Bonjour".stringify(), r#""Bonjour""#);
+        assert_eq!("你好".stringify(), r#""你好""#);
+        assert_eq!("こんにちは".stringify(), r#""こんにちは""#);
+        assert_eq!("สวัสดี".stringify(), r#""สวัสดี""#);
+
         let mut buf = vec![];
         "Hello".encode(&mut buf);
         "Bonjour".encode(&mut buf);
@@ -69,6 +79,8 @@ fn test() {
     }
 
     {
+        assert_eq!(String::from("\"\\/\n\r\t").stringify(), r#""\"\\/\n\r\t""#);
+
         let mut buf = vec![];
         String::from("\"\\/\n\r\t").encode(&mut buf);
         assert_eq!(String::from_utf8_lossy(&buf), r#""\"\\/\n\r\t""#);

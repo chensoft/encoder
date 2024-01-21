@@ -47,6 +47,7 @@ fn test() {
         map.insert("hello", "world\n");
         map.insert("aloha", "honua\n");
         map.encode(&mut buf);
+        assert_eq!(unsafe { simd_json::from_str::<HashMap<&str, &str>>(map.stringify().as_mut_str()).unwrap() }, map);
         assert_eq!(simd_json::from_slice::<HashMap<&str, &str>>(buf.as_mut_slice()).unwrap(), map);
     }
 
@@ -56,6 +57,7 @@ fn test() {
         map.insert(123, "world\n");
         map.insert(456, "honua\n");
         map.encode(&mut buf);
+        assert_eq!(unsafe { simd_json::from_str::<HashMap<i32, &str>>(map.stringify().as_mut_str()).unwrap() }, map);
         assert_eq!(simd_json::from_slice::<HashMap<i32, &str>>(buf.as_mut_slice()).unwrap(), map);
     }
 
@@ -65,6 +67,7 @@ fn test() {
         map.insert("hello", "world\n");
         map.insert("aloha", "honua\n");
         map.encode(&mut buf);
+        assert_eq!(map.stringify(), r#"{"aloha":"honua\n","hello":"world\n"}"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"{"aloha":"honua\n","hello":"world\n"}"#);
     }
 }
