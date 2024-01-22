@@ -1,4 +1,5 @@
 use super::Encode;
+use indexmap::IndexMap;
 use std::collections::HashMap;
 use std::collections::BTreeMap;
 
@@ -38,6 +39,7 @@ macro_rules! impl_map {
 
 impl_map!(HashMap);
 impl_map!(BTreeMap);
+impl_map!(IndexMap);
 
 #[test]
 fn test() {
@@ -66,6 +68,16 @@ fn test() {
         let mut map = BTreeMap::new();
         map.insert("hello", "world\n");
         map.insert("aloha", "honua\n");
+        map.encode(&mut buf);
+        assert_eq!(map.stringify(), r#"{"aloha":"honua\n","hello":"world\n"}"#);
+        assert_eq!(String::from_utf8_lossy(&buf), r#"{"aloha":"honua\n","hello":"world\n"}"#);
+    }
+
+    {
+        let mut buf = vec![];
+        let mut map = IndexMap::new();
+        map.insert("aloha", "honua\n");
+        map.insert("hello", "world\n");
         map.encode(&mut buf);
         assert_eq!(map.stringify(), r#"{"aloha":"honua\n","hello":"world\n"}"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"{"aloha":"honua\n","hello":"world\n"}"#);

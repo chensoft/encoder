@@ -1,4 +1,7 @@
 use super::Encode;
+use indexmap::IndexSet;
+use std::collections::HashSet;
+use std::collections::BTreeSet;
 use std::collections::VecDeque;
 
 macro_rules! impl_array {
@@ -25,6 +28,10 @@ macro_rules! impl_array {
 impl_array!([T]);
 impl_array!(Vec<T>);
 impl_array!(VecDeque<T>);
+
+impl_array!(HashSet<T>);
+impl_array!(BTreeSet<T>);
+impl_array!(IndexSet<T>);
 
 #[test]
 fn test() {
@@ -54,5 +61,35 @@ fn test() {
         vec.encode(&mut buf);
         assert_eq!(vec.stringify(), r#"["hello","world"]"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"["hello","world"]"#);
+    }
+
+    {
+        let mut buf = vec![];
+        let mut set = HashSet::new();
+        set.insert("world");
+        set.insert("hello");
+        set.encode(&mut buf);
+        assert_eq!(unsafe { simd_json::from_str::<HashSet<&str>>(set.stringify().as_mut_str()).unwrap() }, set);
+        assert_eq!(simd_json::from_slice::<HashSet<&str>>(buf.as_mut_slice()).unwrap(), set);
+    }
+
+    {
+        let mut buf = vec![];
+        let mut set = BTreeSet::new();
+        set.insert("world");
+        set.insert("hello");
+        set.encode(&mut buf);
+        assert_eq!(set.stringify(), r#"["hello","world"]"#);
+        assert_eq!(String::from_utf8_lossy(&buf), r#"["hello","world"]"#);
+    }
+
+    {
+        let mut buf = vec![];
+        let mut set = IndexSet::new();
+        set.insert("world");
+        set.insert("hello");
+        set.encode(&mut buf);
+        assert_eq!(set.stringify(), r#"["world","hello"]"#);
+        assert_eq!(String::from_utf8_lossy(&buf), r#"["world","hello"]"#);
     }
 }

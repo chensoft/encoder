@@ -1,7 +1,9 @@
 ## [Unreleased]
 
-### Changed
+### Added
 
+- add support for set
+- add support for indexmap
 - provides a method for conversion to a string
 
 ## [0.2.1] - 2024-01-20

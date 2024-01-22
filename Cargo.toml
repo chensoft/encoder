@@ -11,5 +11,6 @@ readme = "README.md"
 keywords = ["encoder", "encode", "encoding", "number", "json"]
 
 [dependencies]
+indexmap = "=2.1.0"
 simd-json = "=0.13.7"
 encoder-ryu = {path = "lib/encoder-ryu", version = "=1.0.16"}
