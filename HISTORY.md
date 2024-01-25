@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [0.2.2] - 2024-01-25
+
 ### Added
 
 - encode for set

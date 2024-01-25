@@ -32,7 +32,7 @@ fn option(c: &mut Criterion) {
     let mut buf = vec![];
     let opt = Some(123);
 
-    c.bench_function("opt", |b| b.iter(|| {
+    c.bench_function("option", |b| b.iter(|| {
         buf.clear();
         opt.encode(&mut buf);
     }));

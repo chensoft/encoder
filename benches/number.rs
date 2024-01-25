@@ -119,6 +119,15 @@ fn integer(c: &mut Criterion) {
 fn float(c: &mut Criterion) {
     let mut buf = vec![];
 
+    c.bench_function("f32_max", |b| b.iter(|| {
+        buf.clear();
+        f32::MAX.encode(&mut buf);
+    }));
+    c.bench_function("f32_min", |b| b.iter(|| {
+        buf.clear();
+        f32::MIN.encode(&mut buf);
+    }));
+
     c.bench_function("f64_max", |b| b.iter(|| {
         buf.clear();
         f64::MAX.encode(&mut buf);
