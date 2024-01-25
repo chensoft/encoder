@@ -55,7 +55,7 @@
 //!
 //! ## Array encoding
 //!
-//! Support [T], Vec<T>, VecDeque<T>
+//! Support [T], Vec<T>, VecDeque<T>, HashSet<T>, BTreeSet<T>, IndexSet<T>
 //!
 //! ```
 //! use encoder::json::Encode;
@@ -69,7 +69,7 @@
 //!
 //! ## Object encoding
 //!
-//! Support HashMap, BTreeMap
+//! Support HashMap, BTreeMap, IndexMap
 //!
 //! ```
 //! use encoder::json::Encode;
@@ -88,6 +88,13 @@
 
 pub trait Encode {
     fn encode(&self, buf: &mut Vec<u8>);
+
+    #[inline]
+    fn stringify(&self) -> String {
+        let mut buf = vec![];
+        self.encode(&mut buf);
+        unsafe { String::from_utf8_unchecked(buf) }
+    }
 }
 
 mod array;

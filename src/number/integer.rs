@@ -122,4 +122,7 @@ fn test_compose() {
     1_i32.encode(&mut buf);
     2_u32.encode(&mut buf);
     assert_eq!(String::from_utf8_lossy(&buf), r#"12"#);
+
+    assert_eq!(1_i32.stringify(), "1");
+    assert_eq!(2_u32.stringify(), "2");
 }

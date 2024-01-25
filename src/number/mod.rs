@@ -18,6 +18,9 @@
 //!     12345.encode(&mut buf);
 //!     67890.encode(&mut buf);
 //!     println!("{}", String::from_utf8_lossy(&buf));
+//! 
+//!     println!("{}", 12345.stringify());
+//!     println!("{}", 67890.stringify());
 //! }
 //! ```
 //!
@@ -34,6 +37,9 @@
 //!     buf.push(b'\n');
 //!     std::f64::consts::PI.encode(&mut buf);
 //!     println!("{}", String::from_utf8_lossy(&buf));
+//! 
+//!     println!("{}", std::f32::consts::PI.stringify());
+//!     println!("{}", std::f64::consts::PI.stringify());
 //! }
 //! ```
 //!
@@ -41,6 +47,13 @@
 
 pub trait Encode {
     fn encode(&self, buf: &mut Vec<u8>);
+
+    #[inline]
+    fn stringify(&self) -> String {
+        let mut buf = vec![];
+        self.encode(&mut buf);
+        unsafe { String::from_utf8_unchecked(buf) }
+    }
 }
 
 mod float;

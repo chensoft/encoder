@@ -1,6 +1,6 @@
 [package]
 name = "encoder"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 authors = ["Jian Chen <admin@chensoft.com>"]
 license = "MIT"
@@ -11,5 +11,17 @@ readme = "README.md"
 keywords = ["encoder", "encode", "encoding", "number", "json"]
 
 [dependencies]
+indexmap = "=2.1.0"
 simd-json = "=0.13.7"
 encoder-ryu = {path = "lib/encoder-ryu", version = "=1.0.16"}
+
+[dev-dependencies]
+criterion = "=0.5.1"
+
+[[bench]]
+name = "number"
+harness = false
+
+[[bench]]
+name = "json"
+harness = false
