@@ -2,8 +2,9 @@
 
 ### Added
 
-- add support for set
-- add support for indexmap
+- encode for set
+- encode for indexmap
+- encode references to traits within collections
 - provides a method for conversion to a string
 
 ## [0.2.1] - 2024-01-20

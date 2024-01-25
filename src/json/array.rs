@@ -4,34 +4,59 @@ use std::collections::HashSet;
 use std::collections::BTreeSet;
 use std::collections::VecDeque;
 
-macro_rules! impl_array {
+macro_rules! impl_array_obj {
     ($t:ty) => {
         impl<T: Encode> Encode for $t {
             #[inline]
             fn encode(&self, buf: &mut Vec<u8>) {
-                buf.extend_from_slice(b"[");
-        
-                for v in self {
-                    v.encode(buf);
-                    buf.extend_from_slice(b",");
-                }
-        
-                match buf.last_mut() {
-                    Some(val) if *val == b',' => *val = b']',
-                    _ => buf.extend_from_slice(b"]"),
-                }
+                impl_inner!(self, buf);
             }
         }
     };
 }
 
-impl_array!([T]);
-impl_array!(Vec<T>);
-impl_array!(VecDeque<T>);
+macro_rules! impl_array_ref {
+    ($t:ty) => {
+        impl Encode for $t {
+            #[inline]
+            fn encode(&self, buf: &mut Vec<u8>) {
+                impl_inner!(self, buf);
+            }
+        }
+    };
+}
 
-impl_array!(HashSet<T>);
-impl_array!(BTreeSet<T>);
-impl_array!(IndexSet<T>);
+macro_rules! impl_inner {
+    ($self:expr, $buf:expr) => {
+        $buf.extend_from_slice(b"[");
+
+        for v in $self {
+            v.encode($buf);
+            $buf.extend_from_slice(b",");
+        }
+
+        match $buf.last_mut() {
+            Some(val) if *val == b',' => *val = b']',
+            _ => $buf.extend_from_slice(b"]"),
+        }
+    };
+}
+
+impl_array_obj!([T]);
+impl_array_obj!(Vec<T>);
+impl_array_obj!(VecDeque<T>);
+
+impl_array_obj!(HashSet<T>);
+impl_array_obj!(BTreeSet<T>);
+impl_array_obj!(IndexSet<T>);
+
+impl_array_ref!([&dyn Encode]);
+impl_array_ref!(Vec<&dyn Encode>);
+impl_array_ref!(VecDeque<&dyn Encode>);
+
+impl_array_ref!(HashSet<&dyn Encode>);
+impl_array_ref!(BTreeSet<&dyn Encode>);
+impl_array_ref!(IndexSet<&dyn Encode>);
 
 #[test]
 fn test() {
@@ -51,6 +76,16 @@ fn test() {
         vec.encode(&mut buf);
         assert_eq!(vec.stringify(), r#"["hello","world"]"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"["hello","world"]"#);
+    }
+
+    {
+        let mut buf = vec![];
+        let mut vec: Vec<&dyn Encode> = vec![];
+        vec.push(&"hello");
+        vec.push(&12345);
+        vec.encode(&mut buf);
+        assert_eq!(vec.stringify(), r#"["hello",12345]"#);
+        assert_eq!(String::from_utf8_lossy(&buf), r#"["hello",12345]"#);
     }
 
     {

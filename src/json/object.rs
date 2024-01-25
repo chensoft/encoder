@@ -8,31 +8,44 @@ macro_rules! impl_map {
         impl<K: Encode, V: Encode> Encode for $t<K, V> {
             #[inline]
             fn encode(&self, buf: &mut Vec<u8>) {
-                buf.extend_from_slice(b"{");
+                impl_inner!(self, buf);
+            }
+        }
 
-                for (k, v) in self {
-                    // key
-                    let beg = buf.len();
-                    k.encode(buf);
+        impl<K: Encode> Encode for $t<K, &dyn Encode> {
+            #[inline]
+            fn encode(&self, buf: &mut Vec<u8>) {
+                impl_inner!(self, buf);
+            }
+        }
+    };
+}
 
-                    match buf.last() {
-                        Some(val) if *val == b'"' => buf.extend_from_slice(b":"),
-                        _ => {
-                            buf.insert(beg, b'"');
-                            buf.extend_from_slice(b"\":");
-                        }
-                    }
+macro_rules! impl_inner {
+    ($self:expr, $buf:expr) => {
+        $buf.extend_from_slice(b"{");
 
-                    // val
-                    v.encode(buf);
-                    buf.extend_from_slice(b",");
-                }
+        for (k, v) in $self {
+            // key
+            let beg = $buf.len();
+            k.encode($buf);
 
-                match buf.last_mut() {
-                    Some(val) if *val == b',' => *val = b'}',
-                    _ => buf.extend_from_slice(b"}"),
+            match $buf.last() {
+                Some(val) if *val == b'"' => $buf.extend_from_slice(b":"),
+                _ => {
+                    $buf.insert(beg, b'"');
+                    $buf.extend_from_slice(b"\":");
                 }
             }
+
+            // val
+            v.encode($buf);
+            $buf.extend_from_slice(b",");
+        }
+
+        match $buf.last_mut() {
+            Some(val) if *val == b',' => *val = b'}',
+            _ => $buf.extend_from_slice(b"}"),
         }
     };
 }
@@ -81,5 +94,15 @@ fn test() {
         map.encode(&mut buf);
         assert_eq!(map.stringify(), r#"{"aloha":"honua\n","hello":"world\n"}"#);
         assert_eq!(String::from_utf8_lossy(&buf), r#"{"aloha":"honua\n","hello":"world\n"}"#);
+    }
+
+    {
+        let mut buf = vec![];
+        let mut map: IndexMap<&str, &dyn Encode> = IndexMap::new();
+        map.insert("string", &"world");
+        map.insert("number", &12345);
+        map.encode(&mut buf);
+        assert_eq!(map.stringify(), r#"{"string":"world","number":12345}"#);
+        assert_eq!(String::from_utf8_lossy(&buf), r#"{"string":"world","number":12345}"#);
     }
 }

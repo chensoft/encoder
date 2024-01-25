@@ -14,3 +14,14 @@ keywords = ["encoder", "encode", "encoding", "number", "json"]
 indexmap = "=2.1.0"
 simd-json = "=0.13.7"
 encoder-ryu = {path = "lib/encoder-ryu", version = "=1.0.16"}
+
+[dev-dependencies]
+criterion = "=0.5.1"
+
+[[bench]]
+name = "number"
+harness = false
+
+[[bench]]
+name = "json"
+harness = false
