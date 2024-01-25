@@ -114,15 +114,10 @@ fn integer(c: &mut Criterion) {
         buf.clear();
         false.encode(&mut buf);
     }));
+}
 
-    c.bench_function("f32_max", |b| b.iter(|| {
-        buf.clear();
-        f32::MAX.encode(&mut buf);
-    }));
-    c.bench_function("f32_min", |b| b.iter(|| {
-        buf.clear();
-        f32::MIN.encode(&mut buf);
-    }));
+fn float(c: &mut Criterion) {
+    let mut buf = vec![];
 
     c.bench_function("f64_max", |b| b.iter(|| {
         buf.clear();
@@ -134,5 +129,5 @@ fn integer(c: &mut Criterion) {
     }));
 }
 
-criterion_group!(benches, integer);
+criterion_group!(benches, integer, float);
 criterion_main!(benches);
