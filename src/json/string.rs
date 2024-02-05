@@ -12,7 +12,7 @@ impl Encode for char {
 
         let len = {
             let mut cur = std::io::Cursor::new(&mut buf[beg..]);
-            let _ = simd_json::to_writer(&mut cur, self);
+            serde_json::to_writer(&mut cur, self).expect("encode string error");
             cur.position()
         } as usize;
 
@@ -33,7 +33,7 @@ impl Encode for &str {
 
         let len = {
             let mut cur = std::io::Cursor::new(&mut buf[beg..]);
-            let _ = simd_json::to_writer(&mut cur, self);
+            serde_json::to_writer(&mut cur, self).expect("encode string error");
             cur.position()
         } as usize;
 

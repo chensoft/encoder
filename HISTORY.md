@@ -1,5 +1,15 @@
 ## [Unreleased]
 
+## [0.2.4] - 2024-02-05
+
+### Add
+
+- add some clippy lints
+
+### Changed
+
+- to_write has bugs on PVE Ubuntu 22.04
+
 ## [0.2.3] - 2024-02-02
 
 ### Changed

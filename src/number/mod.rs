@@ -45,9 +45,12 @@
 //!
 //! **Happy encoding!**
 
+/// The Encode Trait
 pub trait Encode {
+    /// Encode object to bytes and append it to buf
     fn encode(&self, buf: &mut Vec<u8>);
 
+    /// Encode object to string
     #[inline]
     fn stringify(&self) -> String {
         let mut buf = vec![];

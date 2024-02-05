@@ -14,7 +14,7 @@ macro_rules! impl_integer {
 
                 let len = {
                     let mut cur = std::io::Cursor::new(&mut buf[beg..]);
-                    let _ = simd_json::to_writer(&mut cur, self);
+                    simd_json::to_writer(&mut cur, self).expect("encode integer error");
                     cur.position()
                 };
 

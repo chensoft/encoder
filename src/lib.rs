@@ -12,6 +12,7 @@
 //! ## Example
 //!
 //! Check the relevant modules.
+#![warn(missing_docs)]
 
 pub mod json;
 pub mod number;
