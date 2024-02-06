@@ -13,7 +13,7 @@
 //!
 //! Check the relevant modules.
 #![warn(missing_docs)]
-#![deny(clippy::unwrap_used, clippy::expect_used)]
+#![deny(clippy::unwrap_used, clippy::expect_used, clippy::let_underscore_future)]
 
 pub mod json;
 pub mod number;
