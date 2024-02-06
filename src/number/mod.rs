@@ -13,15 +13,13 @@
 //! ```
 //! use encoder::number::Encode;
 //!
-//! fn main() {
-//!     let mut buf = vec![];
-//!     12345.encode(&mut buf);
-//!     67890.encode(&mut buf);
-//!     println!("{}", String::from_utf8_lossy(&buf));
+//! let mut buf = vec![];
+//! 12345.encode(&mut buf);
+//! 67890.encode(&mut buf);
+//! println!("{}", String::from_utf8_lossy(&buf));
 //! 
-//!     println!("{}", 12345.stringify());
-//!     println!("{}", 67890.stringify());
-//! }
+//! println!("{}", 12345.stringify());
+//! println!("{}", 67890.stringify());
 //! ```
 //!
 //! ## Floating point encoding
@@ -31,16 +29,14 @@
 //! ```
 //! use encoder::number::Encode;
 //!
-//! fn main() {
-//!     let mut buf = vec![];
-//!     std::f32::consts::PI.encode(&mut buf);
-//!     buf.push(b'\n');
-//!     std::f64::consts::PI.encode(&mut buf);
-//!     println!("{}", String::from_utf8_lossy(&buf));
+//! let mut buf = vec![];
+//! std::f32::consts::PI.encode(&mut buf);
+//! buf.push(b'\n');
+//! std::f64::consts::PI.encode(&mut buf);
+//! println!("{}", String::from_utf8_lossy(&buf));
 //! 
-//!     println!("{}", std::f32::consts::PI.stringify());
-//!     println!("{}", std::f64::consts::PI.stringify());
-//! }
+//! println!("{}", std::f32::consts::PI.stringify());
+//! println!("{}", std::f64::consts::PI.stringify());
 //! ```
 //!
 //! **Happy encoding!**

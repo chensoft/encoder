@@ -1,3 +1,5 @@
+#![allow(clippy::uninit_vec)]
+
 use super::Encode;
 
 /// Encode Char
