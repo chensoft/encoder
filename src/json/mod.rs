@@ -25,7 +25,7 @@
 //! Support char, &str, String
 //!
 //! ```
-//! use encoder::json::Encode;//!
+//! use encoder::json::Encode;
 //!
 //! let mut buf = vec![];
 //! "hello".encode(&mut buf);
