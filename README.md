@@ -1,7 +1,7 @@
 Encoder
 ==========================
 
-Blazing fast encoder written in Rust
+A blazing-fast encoder writing to a contiguous buffer
 
 [![Crates.io][crates-badge]][crates-url]
 [![MIT licensed][license-badge]][license-url]
@@ -156,8 +156,10 @@ fn main() {
 |  json  | object_btree    | [93.088 ns 93.129 ns 93.172 ns] |
 |  json  | object_index    | [86.768 ns 86.828 ns 86.891 ns] |
 
+## Documentation
+
+The documentation is [available here](https://docs.rs/encoder).
+
 ## License
 
-This software is released under the MIT License.
-
-Third-party libraries used herein remain the property of their respective authors. Modified library code resides in the 'lib' directory. Our sincere thanks to these authors.
+This software is released under the [MIT License](https://github.com/chensoft/encoder?tab=MIT-1-ov-file).

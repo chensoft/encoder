@@ -4,11 +4,11 @@ version = "0.2.5"
 edition = "2021"
 authors = ["Jian Chen <admin@chensoft.com>"]
 license = "MIT"
-description = "Blazing fast encoder written in Rust"
+description = "A blazing-fast encoder writing to a contiguous buffer"
 documentation = "https://docs.rs/encoder"
 repository = "https://github.com/chensoft/encoder"
 readme = "README.md"
-keywords = ["encoder", "encode", "encoding", "number", "json"]
+keywords = ["encode", "encoding", "number", "json", "contiguous"]
 
 [dependencies]
 ryu = "1.0"
