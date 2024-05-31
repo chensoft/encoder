@@ -2,6 +2,8 @@ use super::Encode;
 
 /// Encode Option 1
 /// 
+/// # Examples
+/// 
 /// ```
 /// use encoder::json::Encode;
 /// 
@@ -10,6 +12,7 @@ use super::Encode;
 /// opt.encode(&mut buf);
 /// opt = None;
 /// opt.encode(&mut buf);
+/// 
 /// assert_eq!(opt.stringify(), r#"null"#);
 /// assert_eq!(String::from_utf8_lossy(&buf), r#"1null"#);
 /// ```
@@ -24,6 +27,8 @@ impl<T: Encode> Encode for Option<T> {
 }
 
 /// Encode Option 2
+///
+/// # Examples
 /// 
 /// ```
 /// use encoder::json::Encode;
@@ -33,6 +38,7 @@ impl<T: Encode> Encode for Option<T> {
 /// opt.encode(&mut buf);
 /// opt = None;
 /// opt.encode(&mut buf);
+/// 
 /// assert_eq!(opt.stringify(), r#"null"#);
 /// assert_eq!(String::from_utf8_lossy(&buf), r#"1null"#);
 /// ```

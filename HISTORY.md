@@ -1,8 +1,8 @@
-## [Unreleased]
+## [0.2.5] - 2024-xx-xx
 
 ## [0.2.4] - 2024-02-05
 
-### Add
+### Added
 
 - add some clippy lints
 

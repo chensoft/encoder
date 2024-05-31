@@ -3,7 +3,7 @@
 //! This library provides fast and efficient ways to encode various types into a `Vec<u8>`.
 //! It avoids unnecessary allocations and copies to achieve high performance.
 //!
-//! ## How to Use
+//! ## Prepare
 //!
 //! Run `cargo add encoder`
 //!

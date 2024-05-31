@@ -3,6 +3,8 @@
 use super::Encode;
 
 /// Encode Char
+///
+/// # Examples
 /// 
 /// ```
 /// use encoder::json::Encode;
@@ -15,6 +17,7 @@ use super::Encode;
 /// 'a'.encode(&mut buf);
 /// 'b'.encode(&mut buf);
 /// 'c'.encode(&mut buf);
+/// 
 /// assert_eq!(String::from_utf8_lossy(&buf), r#""a""b""c""#);
 /// ```
 impl Encode for char {
@@ -38,6 +41,8 @@ impl Encode for char {
 }
 
 /// Encode Str
+///
+/// # Examples
 /// 
 /// ```
 /// use encoder::json::Encode;
@@ -54,6 +59,7 @@ impl Encode for char {
 /// "你好".encode(&mut buf);
 /// "こんにちは".encode(&mut buf);
 /// "สวัสดี".encode(&mut buf);
+/// 
 /// assert_eq!(String::from_utf8_lossy(&buf), r#""Hello""Bonjour""你好""こんにちは""สวัสดี""#);
 /// ```
 impl Encode for &str {
