@@ -21,6 +21,7 @@ use super::Encode;
 /// assert_eq!(String::from_utf8_lossy(&buf), r#""a""b""c""#);
 /// ```
 impl Encode for char {
+    #[inline]
     fn encode(&self, buf: &mut Vec<u8>) {
         let beg = buf.len();
         let max = 4 + 2; // max utf8 len + two double quotes

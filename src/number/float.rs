@@ -1,5 +1,38 @@
 use super::Encode;
-use encoder_ryu::buffer::Sealed;
+use ryu::raw::format32;
+use ryu::raw::format64;
+
+/// Format non-finite float, copied from ryu
+#[cold]
+#[inline]
+fn format_nonfinite32(f: f32) -> &'static str {
+    const MANTISSA_MASK: u32 = 0x007fffff;
+    const SIGN_MASK: u32 = 0x80000000;
+    let bits = f.to_bits();
+    if bits & MANTISSA_MASK != 0 {
+        "NaN"
+    } else if bits & SIGN_MASK != 0 {
+        "-inf"
+    } else {
+        "inf"
+    }
+}
+
+/// Format non-finite float, copied from ryu
+#[cold]
+#[inline]
+fn format_nonfinite64(f: f64) -> &'static str {
+    const MANTISSA_MASK: u64 = 0x000fffffffffffff;
+    const SIGN_MASK: u64 = 0x8000000000000000;
+    let bits = f.to_bits();
+    if bits & MANTISSA_MASK != 0 {
+        "NaN"
+    } else if bits & SIGN_MASK != 0 {
+        "-inf"
+    } else {
+        "inf"
+    }
+}
 
 /// Encode Float
 ///
@@ -7,7 +40,7 @@ use encoder_ryu::buffer::Sealed;
 ///
 /// ```
 /// use encoder::number::Encode;
-/// 
+///
 /// fn assert(val: impl Encode, cmp: &str) {
 ///     let mut buf = vec![];
 ///     val.encode(&mut buf);
@@ -35,7 +68,7 @@ use encoder_ryu::buffer::Sealed;
 ///
 /// ```
 /// use encoder::number::Encode;
-/// 
+///
 /// let mut buf = vec![];
 /// 1_f32.encode(&mut buf);
 /// 2_f32.encode(&mut buf);
@@ -50,21 +83,21 @@ use encoder_ryu::buffer::Sealed;
 /// assert_eq!(3_f32.stringify(), "3.0");
 /// ```
 macro_rules! impl_float {
-    ($t:ident) => {
+    ($t:ident, $f:ident, $n:ident) => {
         impl Encode for $t {
             #[inline]
             fn encode(&self, buf: &mut Vec<u8>) {
-                match !self.is_nonfinite() {
+                match self.is_finite() {
                     true => {
                         buf.reserve(24);
 
                         unsafe {
-                            let len = self.write_to_ryu_buffer(buf.as_mut_ptr().add(buf.len()));
+                            let len = ($f)(*self, buf.as_mut_ptr().add(buf.len()));
                             buf.set_len(buf.len() + len);
                         }
                     }
                     false => {
-                        buf.extend_from_slice(self.format_nonfinite().as_bytes());
+                        buf.extend_from_slice(($n)(*self).as_bytes());
                     }
                 }
             }
@@ -72,5 +105,5 @@ macro_rules! impl_float {
     };
 }
 
-impl_float!(f32);
-impl_float!(f64);
+impl_float!(f32, format32, format_nonfinite32);
+impl_float!(f64, format64, format_nonfinite64);
